@@ -1,0 +1,66 @@
+# Archivos de Visual Studio
+.vs/
+*.suo
+*.user
+*.cache
+*.dll
+*.exe
+*.pdb
+*.ilk
+*.obj
+*.log
+*.pyc
+
+# Archivos de construcción
+bin/
+obj/
+out/
+publish/
+
+# Paquetes y dependencias
+packages/
+node_modules/
+*.nupkg
+*.snupkg
+
+# Archivos de configuración de usuario
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.json
+
+# Bases de datos
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# Archivos de herramientas y configuración
+*.vsix
+*.log
+*.bak
+*.sln.ide
+*.sln.DotSettings
+
+# Archivos de configuración de Entity Framework
+Migrations/
+
+# Archivos de Docker y contenedores
+docker-compose.override.yml
+docker-compose.yml
+.env
+
+# Archivos de publicación
+publish/
+*.Publish.xml
+
+# Configuración de dependencias de .NET
+project.lock.json
+global.json
+
+# Caché de NuGet
+.nuget/
+.nuget/packages/
+
+# Archivos de depuración
+*.pidb
+*.ncrunchsolution
