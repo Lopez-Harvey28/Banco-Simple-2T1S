@@ -105,6 +105,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Tan;
             ClientSize = new Size(493, 317);
             Controls.Add(txtSaldo);
             Controls.Add(lblDisponible);

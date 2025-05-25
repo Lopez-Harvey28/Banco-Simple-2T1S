@@ -1,4 +1,5 @@
 ﻿using BancoSimple2T1.Models;
+using BancoSimple2T1.Servicios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,20 +23,17 @@ namespace BancoSimple2T1
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (!AccionesRepetidas.ValidarCampos(txtNombre, txtIdentificacion))
+            try
             {
-                //aqui se utilizo el metodo de la clase AccionesRepetidas para evitar la duplicacion de codigo
-                Mensajes.MostrarError("Por favor, complete todos los campos.");
-                return;
+                var servicio = new Servicio_Cliente();
+                NuevoCliente = servicio.CrearCliente(txtNombre.Text, txtIdentificacion.Text);
+                DialogResult = DialogResult.OK;
+                Close();
             }
-            Mensajes.MostrarExito("Cliente agregado con éxito.");
-            NuevoCliente = new Cliente
+            catch (Exception ex)
             {
-                Nombre = txtNombre.Text,
-                Identificacion = txtIdentificacion.Text
-            };
-            DialogResult = DialogResult.OK;
-            Close();
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

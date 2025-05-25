@@ -1,4 +1,5 @@
 ﻿using BancoSimple2T1.Data;
+using BancoSimple2T1.Servicios;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace BancoSimple2T1
         public decimal Monto { get; private set; }
         private readonly int _cuentaOrigenId;
         private readonly int _cuentaDestinoId;
-        //Haremos los mismos cambios que hicimos anteriormente
+        //Hacemos los mismos cambios que hicimos anteriormente
         private readonly BancoSimpleContext _dbcontext;
         public TransaccionesForms(int cuentaOrigenId, int cuentaDestinoId)
         {
@@ -31,40 +32,49 @@ namespace BancoSimple2T1
             CargarInformacionCuenta();
 
         }
-
+        //este es un metodo echo para cargar las cuentas 
         private void CargarInformacionCuenta()
         {
-           // Y aqui tambien 
-            var cuentaOrigen = _dbcontext.Cuentas.
-                Include(c => c.cliente).
-                First(c => c.CuentaId == _cuentaOrigenId);
-
-            var cuentaDestino = _dbcontext.Cuentas.
-               Include(c => c.cliente).
-               First(c => c.CuentaId == _cuentaDestinoId);
-
-            lblOrigen.Text = $"Nombre: {cuentaOrigen.cliente.Nombre} cuenta {cuentaOrigen.NumeroCuenta}";
-            lblDestino.Text = $"Nombre: {cuentaDestino.cliente.Nombre} cuenta {cuentaDestino.NumeroCuenta}";
-            lblDisponible.Text = $"Saldo Disponible : {cuentaOrigen.Saldo:c}";
+            var servicio = new Servicio_Transaccion();
+            try
+            {
+                var (infoOrigen, infoDestino, saldo) = servicio.ObtenerInfoCuentas(_cuentaOrigenId, _cuentaDestinoId);
+                lblOrigen.Text = infoOrigen;
+                lblDestino.Text = infoDestino;
+                lblDisponible.Text = saldo;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar cuentas: " + ex.Message);
+                Close();
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
-
+        //Aqui lleva una condicional para que el monto sea mayor a 0
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (decimal.TryParse(txtSaldo.Text, out decimal monto) && monto > 0)
+            if (decimal.TryParse(txtSaldo.Text, out decimal monto))
             {
-                Monto = monto;
-                DialogResult = DialogResult.OK;
-                Close();
+                var servicio = new Servicio_Transaccion();
+                if (servicio.ValidarMonto(monto))
+                {
+                    Monto = monto;
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("Ingrese un monto mayor a 0");
+                }
             }
-            else {
-                MessageBox.Show("Ingrese un monto mayor a 0");
+            else
+            {
+                MessageBox.Show("Monto inválido");
             }
-           
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

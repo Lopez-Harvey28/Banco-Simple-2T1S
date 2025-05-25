@@ -150,6 +150,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(1161, 591);
             Controls.Add(btnDesactivar);
             Controls.Add(btnVerTrans);
@@ -163,7 +164,7 @@
             Controls.Add(btnAgregarCliente);
             Controls.Add(dgvClientes);
             Name = "Form1";
-            Text = "Form1";
+            Text = "FormPrincipal";
             ((System.ComponentModel.ISupportInitialize)dgvClientes).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvCuentas).EndInit();
             ResumeLayout(false);

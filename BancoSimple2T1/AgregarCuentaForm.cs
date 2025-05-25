@@ -1,4 +1,5 @@
 ﻿using BancoSimple2T1.Models;
+using BancoSimple2T1.Servicios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,28 +21,20 @@ namespace BancoSimple2T1
             InitializeComponent();
             _clienteId = clienteId;
         }
-
+        //boton para crear una nueva cuenta
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            //Y aqui tambien se utilizo para evitar la duplicacion de codigo
-            if (!AccionesRepetidas.ValidarCampos(txtNumeroCuenta))
+            try
             {
-                MessageBox.Show("El número de cuenta es obligatorio.");
-                return;
+                var servicio = new Servicio_Cuenta();
+                NuevaCuenta = servicio.CrearCuenta(txtNumeroCuenta.Text, numSaldoInicial.Value, _clienteId);
+                DialogResult = DialogResult.OK;
+                Close();
             }
-
-            Mensajes.MostrarExito("Cuenta creada con éxito.");
-
-            NuevaCuenta = new Cuenta
+            catch (Exception ex)
             {
-                NumeroCuenta = txtNumeroCuenta.Text,
-                Saldo = numSaldoInicial.Value,
-                ClienteId = _clienteId,
-                Activa = true
-            };
-
-            DialogResult = DialogResult.OK;
-            Close();
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

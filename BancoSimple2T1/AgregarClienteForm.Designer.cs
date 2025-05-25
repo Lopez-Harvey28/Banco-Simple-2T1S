@@ -92,6 +92,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(255, 224, 192);
             ClientSize = new Size(631, 187);
             Controls.Add(btnCancelar);
             Controls.Add(txtIdentificacion);
@@ -100,7 +101,7 @@
             Controls.Add(txtNombre);
             Controls.Add(label1);
             Name = "AgregarClienteForm";
-            Text = "Form2";
+            Text = "Agregar Cliente";
             ResumeLayout(false);
             PerformLayout();
         }

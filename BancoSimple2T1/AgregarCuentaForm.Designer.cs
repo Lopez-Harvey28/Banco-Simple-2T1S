@@ -82,6 +82,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.LightSalmon;
             ClientSize = new Size(453, 185);
             Controls.Add(btnAceptar);
             Controls.Add(numSaldoInicial);
@@ -89,7 +90,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "AgregarCuentaForm";
-            Text = "Form2";
+            Text = "Agregar Cuenta";
             ((System.ComponentModel.ISupportInitialize)numSaldoInicial).EndInit();
             ResumeLayout(false);
             PerformLayout();
