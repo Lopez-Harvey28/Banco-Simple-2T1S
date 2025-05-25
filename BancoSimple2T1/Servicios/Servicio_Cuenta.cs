@@ -11,23 +11,26 @@ namespace BancoSimple2T1.Servicios
     //Esta clase lleva toda la logica de cuentas y validaciones 
     public class Servicio_Cuenta
     {
-        private readonly BancoSimpleContext _context;
+        private readonly BancoSimpleContext _dbcontext;
 
         public Servicio_Cuenta()
         {
-            _context = new BancoSimpleContext();
+            _dbcontext = new BancoSimpleContext();
         }
 
         public Cuenta CrearCuenta(string numeroCuenta, decimal saldoInicial, int clienteId)
         {
-            if (string.IsNullOrWhiteSpace(numeroCuenta))
+            if (!AccionesRepetidas.ValidarCampos(numeroCuenta))
+            {
                 throw new ArgumentException("El número de cuenta es requerido");
-
+            }
+            Mensajes.MostrarExito("Cuenta creada con exito");
             // Obtener el cliente correspondiente al clienteId
-            var cliente = _context.Clientes.FirstOrDefault(c => c.ClienteId == clienteId);
+            var cliente = _dbcontext.Clientes.FirstOrDefault(c => c.ClienteId == clienteId);
             if (cliente == null)
+            {
                 throw new ArgumentException("El cliente especificado no existe");
-
+            }
             
             var cuenta = new Cuenta
             {
@@ -38,8 +41,8 @@ namespace BancoSimple2T1.Servicios
                 Activa = true
             };
 
-            _context.Cuentas.Add(cuenta);
-            _context.SaveChanges();
+            _dbcontext.Cuentas.Add(cuenta);
+            _dbcontext.SaveChanges();
 
             return cuenta;
         }

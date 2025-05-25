@@ -64,6 +64,7 @@
             // numSaldoInicial
             // 
             numSaldoInicial.Location = new Point(250, 83);
+            numSaldoInicial.Maximum = new decimal(new int[] { -1530494976, 232830, 0, 0 });
             numSaldoInicial.Name = "numSaldoInicial";
             numSaldoInicial.Size = new Size(139, 27);
             numSaldoInicial.TabIndex = 3;

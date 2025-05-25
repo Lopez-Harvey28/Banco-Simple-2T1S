@@ -16,8 +16,10 @@ namespace BancoSimple2T1.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server = (localdb)\CarlosR; database = BancoSimple2M5; trusted_Connection = true; trustservercertificate = true;");
+            optionsBuilder.UseSqlServer(@"Server = (localdb)\CarlosR;Database= BancoSimple2M5;Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;");
         }
+
+        
         //Definicion de filtro global
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

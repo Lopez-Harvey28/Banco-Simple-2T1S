@@ -11,9 +11,9 @@ namespace BancoSimple2T1
     {
         //En esta clase estaran las acciones que se repiten en varias partes del codigo
         //Aqui en este metodo hacemos que las validaciones solo se tengan que llamar para validarlas
-        public static bool ValidarCampos(params TextBox[] campos)
+        public static bool ValidarCampos(params string[] campos)
         {
-            return campos.All(c => !string.IsNullOrWhiteSpace(c.Text));
+            return campos.All(campos => !string.IsNullOrWhiteSpace(campos));
         }
 
     }

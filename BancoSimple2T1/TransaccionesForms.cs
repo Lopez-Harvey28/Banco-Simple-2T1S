@@ -32,7 +32,7 @@ namespace BancoSimple2T1
             CargarInformacionCuenta();
 
         }
-        //este es un metodo echo para cargar las cuentas 
+        //este es un metodo hecho para cargar las cuentas 
         private void CargarInformacionCuenta()
         {
             var servicio = new Servicio_Transaccion();

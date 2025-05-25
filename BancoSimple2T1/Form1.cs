@@ -7,7 +7,7 @@ namespace BancoSimple2T1
     public partial class Form1 : Form
     {
         //Cambiamos el nombre del objeto para que sea mas familiar con el tipo de codigo que estamos trabajando 
-        //pasa de ser con(No se relaciona mucho con los conceptos del entorno) a dbcontext haciendo que sea más entidible el tipo de trabajo que hace
+        //pasa de ser con(No se relaciona mucho con los conceptos del entorno) a dbcontext haciendo que sea más entendible el tipo de trabajo que hace
         
         private BancoSimpleContext _dbcontext = new BancoSimpleContext();
         public Form1()
@@ -18,7 +18,7 @@ namespace BancoSimple2T1
 
         private void CargarInformacionCuenta()
         {
-            //Pasamos a actualizar el objeto en cada uno de sus usos
+            //Pasamos a actualizar el objeto en cada uno de sus usos en el codigo
             //Como aquí
             var cuentas = _dbcontext.Cuentas.
                 Include(c => c.cliente).Where(c => c.Activa).
@@ -41,10 +41,7 @@ namespace BancoSimple2T1
             var form = new AgregarClienteForm();
             if (form.ShowDialog() == DialogResult.OK)
             {
-                //Para no repetir la misma palabra dire el proque de estos cambios
-                //Una de las razones para cambiar el nombre del objeto es para implementarlo en otros usos
-                _dbcontext.Clientes.Add(form.NuevoCliente);
-                _dbcontext.SaveChanges();
+               
                 CargarInformacionCuenta();
 
             }
@@ -61,10 +58,7 @@ namespace BancoSimple2T1
             var form = new AgregarCuentaForm(clienteId);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                //Por ejemplo este objeto es usado en otras partes del codigo 
-                //Y su trabajo en todos es similar
-                _dbcontext.Cuentas.Add(form.NuevaCuenta);
-                _dbcontext.SaveChanges();
+                
                 CargarInformacionCuenta(); 
             }
         }
@@ -115,7 +109,7 @@ namespace BancoSimple2T1
             {
                 transferencia.Rollback();
 
-                var inner = ex.InnerException?.Message ?? "No hay InnerException";
+                var inner = ex.InnerException?.Message ?? "No hay lo sentimos";
                 MessageBox.Show($"Error al guardar:\n{ex.Message}\n\nDetalle:\n{inner}");
             }
 
@@ -139,7 +133,7 @@ namespace BancoSimple2T1
 
         }
 
-        private void btnBuscarCleinte_Click(object sender, EventArgs e)
+        private void btnBuscarCliente_Click(object sender, EventArgs e)
         {
             //Busqueda de patrones con like
             var patron = txtBuscarCliente.Text;
@@ -165,7 +159,7 @@ namespace BancoSimple2T1
             else
             {
                 var cuentaId = (int)dgvCuentas.SelectedRows[0].Cells["CuentaId"].Value;
-                //hacienod que las personas sepan para que se usa
+                //haciendo que las personas sepan para que se usa
                 var cuenta = _dbcontext.Cuentas.Find(cuentaId);
                 if (cuenta != null)
                 {

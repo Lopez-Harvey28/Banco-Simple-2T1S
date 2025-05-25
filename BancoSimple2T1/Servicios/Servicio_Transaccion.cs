@@ -11,21 +11,21 @@ namespace BancoSimple2T1.Servicios
     public class Servicio_Transaccion
     {
         //Esta clase lleva la logica de la transaccion y las validaciones correspondientes 
-        private readonly BancoSimpleContext _context;
+        private readonly BancoSimpleContext _dbcontext;
 
         public Servicio_Transaccion()
         {
-            _context = new BancoSimpleContext();
+            _dbcontext = new BancoSimpleContext();
         }
 
         public (string infoOrigen, string infoDestino, string saldoDisponible) ObtenerInfoCuentas(int cuentaOrigenId, int cuentaDestinoId)
         {
             // Busca la cuenta origen incluyendo la información del cliente
-            var cuentaOrigen = _context.Cuentas
+            var cuentaOrigen = _dbcontext.Cuentas
                 .Include(c => c.cliente)
                 .FirstOrDefault(c => c.CuentaId == cuentaOrigenId);
             // Busca la cuenta destino incluyendo la información del cliente
-            var cuentaDestino = _context.Cuentas
+            var cuentaDestino = _dbcontext.Cuentas
                 .Include(c => c.cliente)
                 .FirstOrDefault(c => c.CuentaId == cuentaDestinoId);
             // Verifica que ambas cuentas existan

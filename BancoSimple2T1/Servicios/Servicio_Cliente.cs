@@ -11,28 +11,32 @@ namespace BancoSimple2T1.Servicios
     //Esta clase lleva la logica para trabajar con los clientes y aqui van las validaciones 
     public class Servicio_Cliente
     {
-        private readonly BancoSimpleContext _context;
+        private readonly BancoSimpleContext _dbcontext;
 
         public Servicio_Cliente()
         {
-            _context = new BancoSimpleContext();
+            _dbcontext = new BancoSimpleContext();
         }
 
         public Cliente CrearCliente(string nombre, string identificacion)
         {
-            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(identificacion))
+            if (!AccionesRepetidas.ValidarCampos(nombre,identificacion))
             {
                 throw new ArgumentException("Todos los campos son necesarios");
             }
-
+            if (nombre.Any(char.IsDigit))
+            {
+                throw new ArgumentException("El nombre no puede contener números");
+            }
+            Mensajes.MostrarExito("Se ha creado el cliente con exito");
             var cliente = new Cliente
             {
                 Nombre = nombre.Trim(),
                 Identificacion = identificacion.Trim()
             };
 
-            _context.Clientes.Add(cliente);
-            _context.SaveChanges();
+            _dbcontext.Clientes.Add(cliente);
+            _dbcontext.SaveChanges();
 
             return cliente;
         }
