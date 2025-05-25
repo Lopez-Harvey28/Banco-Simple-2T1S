@@ -8,14 +8,15 @@ namespace BancoSimple2T1
     {
         //Cambiamos el nombre del objeto para que sea mas familiar con el tipo de codigo que estamos trabajando 
         //pasa de ser con(No se relaciona mucho con los conceptos del entorno) a dbcontext haciendo que sea más entidible el tipo de trabajo que hace
+        
         private BancoSimpleContext _dbcontext = new BancoSimpleContext();
         public Form1()
         {
             InitializeComponent();
-            CargarInfo();
+            CargarInformacionCuenta();
         }
 
-        private void CargarInfo()
+        private void CargarInformacionCuenta()
         {
             //Pasamos a actualizar el objeto en cada uno de sus usos
             //Como aquí
@@ -44,7 +45,7 @@ namespace BancoSimple2T1
                 //Una de las razones para cambiar el nombre del objeto es para implementarlo en otros usos
                 _dbcontext.Clientes.Add(form.NuevoCliente);
                 _dbcontext.SaveChanges();
-                CargarInfo();
+                CargarInformacionCuenta();
 
             }
         }

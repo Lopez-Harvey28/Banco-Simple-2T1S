@@ -13,6 +13,7 @@ namespace BancoSimple2T1
 {
     public partial class AgregarClienteForm : Form
     {
+        //Cliente creado al aceptar el formulario 
         public Cliente NuevoCliente { get; private set; }
         public AgregarClienteForm()
         {

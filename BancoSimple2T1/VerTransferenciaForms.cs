@@ -15,7 +15,8 @@ namespace BancoSimple2T1
     {
         //Aqui ocurre lo mismo, el objeto "con" por si solo no nos dice nada al igual que antes
         //Por ello lo cambiaremos y utlizaremos el mismo nombre para llevar la misma logica que antes y asi no confundirnos por palabras sin relación
-        private BancoSimpleContext _dbcontext = new BancoSimpleContext(); private BancoSimpleContext con = new BancoSimpleContext();
+        //Se utiliza readonly BancoSimpleContext _dbcontext new BancoSimpleContext();
+        private readonly BancoSimpleContext _dbcontext = new BancoSimpleContext();
         public VerTransferenciaForms()
         {
             InitializeComponent();

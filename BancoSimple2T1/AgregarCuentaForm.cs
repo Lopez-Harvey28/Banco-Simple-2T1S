@@ -26,7 +26,7 @@ namespace BancoSimple2T1
             //Y aqui tambien se utilizo para evitar la duplicacion de codigo
             if (!AccionesRepetidas.ValidarCampos(txtNumeroCuenta))
             {
-                Mensajes.MostrarAdvertencia("El número de cuenta es obligatorio.");
+                MessageBox.Show("El número de cuenta es obligatorio.");
                 return;
             }
 

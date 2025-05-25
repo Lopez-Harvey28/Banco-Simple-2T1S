@@ -30,11 +30,6 @@ namespace BancoSimple2T1
         {
             MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
-        public static void MostrarAdvertencia(string mensaje)
-        {
-            MessageBox.Show(mensaje, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
     }
 
 }
