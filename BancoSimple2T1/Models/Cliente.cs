@@ -11,8 +11,8 @@ namespace BancoSimple2T1.Models
     {
         [Key] 
         public int ClienteId { get; set; }
-        public string Nombre { get; set; }
-        public string Identificacion { get; set; }
+        public required string Nombre { get; set; }
+        public required string Identificacion { get; set; }
 
         // Relacion uno a muchos con cuentas 
         public List <Cuenta> Cuentas { get; set;} = new List<Cuenta>();

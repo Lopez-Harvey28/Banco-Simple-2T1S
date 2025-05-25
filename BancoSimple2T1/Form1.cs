@@ -65,7 +65,7 @@ namespace BancoSimple2T1
                 //Y su trabajo en todos es similar
                 _dbcontext.Cuentas.Add(form.NuevaCuenta);
                 _dbcontext.SaveChanges();
-                CargarInfo();
+                CargarInformacionCuenta(); 
             }
         }
         //Transacciones
@@ -107,7 +107,7 @@ namespace BancoSimple2T1
                 _dbcontext.SaveChanges();
                 transferencia.Commit();
                 MessageBox.Show("Transferencia realizada");
-                CargarInfo();
+                CargarInformacionCuenta();
 
 
             }
@@ -167,9 +167,17 @@ namespace BancoSimple2T1
                 var cuentaId = (int)dgvCuentas.SelectedRows[0].Cells["CuentaId"].Value;
                 //hacienod que las personas sepan para que se usa
                 var cuenta = _dbcontext.Cuentas.Find(cuentaId);
-                cuenta.Activa = false;
-                _dbcontext.SaveChanges();
-                CargarInfo();
+                if (cuenta != null)
+                {
+                    cuenta.Activa = false;
+                    _dbcontext.SaveChanges();
+                    CargarInformacionCuenta();
+                }
+                else
+                {
+                    MessageBox.Show("La cuenta seleccionada no existe.");
+                }
+
             }
         }
     }

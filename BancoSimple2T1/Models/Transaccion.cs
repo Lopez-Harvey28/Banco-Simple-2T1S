@@ -13,7 +13,7 @@ namespace BancoSimple2T1.Models
         public int TransaccionId { get; set; }
         public decimal Monto { get; set; }
         public DateTime Fecha { get; set; } = DateTime.Now;
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
         public int ? CuentaOrigenId { get; set; }
         public int ? CuentaDestinoId { get; set; }
 

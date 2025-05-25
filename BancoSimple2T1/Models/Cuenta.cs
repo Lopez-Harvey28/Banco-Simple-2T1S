@@ -9,15 +9,16 @@ namespace BancoSimple2T1.Models
 {
     public class Cuenta
     {
+       
         [Key]
         public int CuentaId { get; set; }
-        public string NumeroCuenta { get; set; }
+        public required string NumeroCuenta { get; set; }
         public decimal Saldo { get; set; }
         public bool Activa { get; set; } = true;
         
         // Nombre de propiedad de capitalizacion por convencion
         public int ClienteId { get; set; }
-        public Cliente cliente { get; set; }
+        public required Cliente cliente { get; set; }
 
     }
 }

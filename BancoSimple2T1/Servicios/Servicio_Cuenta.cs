@@ -23,11 +23,18 @@ namespace BancoSimple2T1.Servicios
             if (string.IsNullOrWhiteSpace(numeroCuenta))
                 throw new ArgumentException("El número de cuenta es requerido");
 
+            // Obtener el cliente correspondiente al clienteId
+            var cliente = _context.Clientes.FirstOrDefault(c => c.ClienteId == clienteId);
+            if (cliente == null)
+                throw new ArgumentException("El cliente especificado no existe");
+
+            
             var cuenta = new Cuenta
             {
                 NumeroCuenta = numeroCuenta.Trim(),
                 Saldo = saldoInicial,
                 ClienteId = clienteId,
+                cliente = cliente, // Establecer el miembro requerido 'cliente'
                 Activa = true
             };
 
