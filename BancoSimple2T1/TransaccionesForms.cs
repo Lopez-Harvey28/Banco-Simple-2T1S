@@ -17,25 +17,28 @@ namespace BancoSimple2T1
         public decimal Monto { get; private set; }
         private int _cuentaOrigenId;
         private int _cuentaDestinoId;
-        private BancoSimpleContext db;
+        //Haremos los mismos cambios que hicimos anteriormente
+        private BancoSimpleContext _dbcontext;
         public TransaccionesForms(int cuentaOrigenId, int cuentaDestinoId)
         {
             InitializeComponent();
             _cuentaOrigenId = cuentaOrigenId;
             _cuentaDestinoId = cuentaDestinoId;
-           
-            db = new BancoSimpleContext();
+
+            //Se cambio aquí
+            _dbcontext = new BancoSimpleContext();
             CargarInfoCuenta();
 
         }
 
         private void CargarInfoCuenta()
         {
-            var cuentaOrigen = db.Cuenta.
+           // Y aqui tambien 
+            var cuentaOrigen = _dbcontext.Cuentas.
                 Include(c => c.cliente).
                 First(c => c.CuentaId == _cuentaOrigenId);
 
-            var cuentaDestino = db.Cuenta.
+            var cuentaDestino = _dbcontext.Cuentas.
                Include(c => c.cliente).
                First(c => c.CuentaId == _cuentaDestinoId);
 

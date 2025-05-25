@@ -6,7 +6,9 @@ namespace BancoSimple2T1
 {
     public partial class Form1 : Form
     {
-        private BancoSimpleContext _db = new BancoSimpleContext();
+        //Cambiamos el nombre del objeto para que sea mas familiar con el tipo de codigo que estamos trabajando 
+        //pasa de ser con(No se relaciona mucho con los conceptos del entorno) a dbcontext haciendo que sea más entidible el tipo de trabajo que hace
+        private BancoSimpleContext _dbcontext = new BancoSimpleContext();
         public Form1()
         {
             InitializeComponent();
@@ -15,7 +17,9 @@ namespace BancoSimple2T1
 
         private void CargarInfo()
         {
-            var cuenta = _db.Cuenta.
+            //Pasamos a actualizar el objeto en cada uno de sus usos
+            //Como aquí
+            var cuentas = _dbcontext.Cuentas.
                 Include(c => c.cliente).Where(c => c.Activa).
                 Select(c => new
                 {
@@ -26,9 +30,9 @@ namespace BancoSimple2T1
                     c.Activa,
                     c.ClienteId
                 }).ToList();
-
-            dgvClientes.DataSource = _db.Cliente.ToList();
-            dgvCuentas.DataSource = cuenta;
+            //Aquí también
+            dgvClientes.DataSource = _dbcontext.Clientes.ToList();
+            dgvCuentas.DataSource = cuentas;
         }
 
         private void btnAgregarCliente_Click(object sender, EventArgs e)
@@ -36,8 +40,10 @@ namespace BancoSimple2T1
             var form = new AgregarClienteForm();
             if (form.ShowDialog() == DialogResult.OK)
             {
-                _db.Cliente.Add(form.NuevoCliente);
-                _db.SaveChanges();
+                //Para no repetir la misma palabra dire el proque de estos cambios
+                //Una de las razones para cambiar el nombre del objeto es para implementarlo en otros usos
+                _dbcontext.Clientes.Add(form.NuevoCliente);
+                _dbcontext.SaveChanges();
                 CargarInfo();
 
             }
@@ -54,8 +60,10 @@ namespace BancoSimple2T1
             var form = new AgregarCuentaForm(clienteId);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                _db.Cuenta.Add(form.NuevaCuenta);
-                _db.SaveChanges();
+                //Por ejemplo este objeto es usado en otras partes del codigo 
+                //Y su trabajo en todos es similar
+                _dbcontext.Cuentas.Add(form.NuevaCuenta);
+                _dbcontext.SaveChanges();
                 CargarInfo();
             }
         }
@@ -64,12 +72,14 @@ namespace BancoSimple2T1
         {
             //implementacion
             //Nivel de aislamiento
-            using var transferencia = _db.Database.BeginTransaction(System.Data.IsolationLevel.Serializable);
+            using var transferencia = _dbcontext.Database.BeginTransaction(System.Data.IsolationLevel.Serializable);
             try
             {
                 //Filtro y ordenacion
-                var cuentaOrigen = _db.Cuenta.FirstOrDefault(c => c.CuentaId == cuentaOrigenId);
-                var cuentaDestino = _db.Cuenta.FirstOrDefault(c => c.CuentaId == cuentaDestinoId);
+                //Entonces para que sea mas fácil de identificar su funcionamiento es mejor trabajar el mismo nombre 
+                //en las respectivas partes del codigo donde se utilizará
+                var cuentaOrigen = _dbcontext.Cuentas.FirstOrDefault(c => c.CuentaId == cuentaOrigenId);
+                var cuentaDestino = _dbcontext.Cuentas.FirstOrDefault(c => c.CuentaId == cuentaDestinoId);
 
                 if (cuentaOrigen == null || cuentaDestino == null)
                     throw new Exception("Una o ambas cuentas no existen");
@@ -83,7 +93,8 @@ namespace BancoSimple2T1
                 cuentaDestino.Saldo += monto;
 
                 //Registrar la transaccion
-                _db.Transacciones.Add(new Transaccion
+                //Para que los que vean codigo les sea más fácil de identificar y sepan su uso
+                _dbcontext.Transacciones.Add(new Transaccion
                 {
                     Monto = monto,
                     Fecha = DateTime.Now,
@@ -91,8 +102,8 @@ namespace BancoSimple2T1
                     CuentaOrigenId = cuentaOrigenId,
                     CuentaDestinoId = cuentaDestinoId
                 });
-                _db.SaveChanges();
-                //Transaccion completada
+                //Aqui tambien se modifico
+                _dbcontext.SaveChanges();
                 transferencia.Commit();
                 MessageBox.Show("Transferencia realizada");
                 CargarInfo();
@@ -131,7 +142,8 @@ namespace BancoSimple2T1
         {
             //Busqueda de patrones con like
             var patron = txtBuscarCliente.Text;
-            var cliente = _db.Cliente.Where(c => EF.Functions.Like(c.Nombre, $"%{patron}%")).ToList();
+            //Otro motivo para el cambio es que al momento de verlo este se realcione inmediatamente con la clase BancoSimpleContext
+            var cliente = _dbcontext.Clientes.Where(c => EF.Functions.Like(c.Nombre, $"%{patron}%")).ToList();
 
             dgvClientes.DataSource = cliente;
         }
@@ -152,9 +164,10 @@ namespace BancoSimple2T1
             else
             {
                 var cuentaId = (int)dgvCuentas.SelectedRows[0].Cells["CuentaId"].Value;
-                var cuenta = _db.Cuenta.Find(cuentaId);
+                //hacienod que las personas sepan para que se usa
+                var cuenta = _dbcontext.Cuentas.Find(cuentaId);
                 cuenta.Activa = false;
-                _db.SaveChanges();
+                _dbcontext.SaveChanges();
                 CargarInfo();
             }
         }

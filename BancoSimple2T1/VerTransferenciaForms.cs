@@ -13,7 +13,9 @@ namespace BancoSimple2T1
 {
     public partial class VerTransferenciaForms : Form
     {
-        private BancoSimpleContext con = new BancoSimpleContext();
+        //Aqui ocurre lo mismo, el objeto "con" por si solo no nos dice nada al igual que antes
+        //Por ello lo cambiaremos y utlizaremos el mismo nombre para llevar la misma logica que antes y asi no confundirnos por palabras sin relación
+        private BancoSimpleContext _dbcontext = new BancoSimpleContext(); private BancoSimpleContext con = new BancoSimpleContext();
         public VerTransferenciaForms()
         {
             InitializeComponent();
@@ -22,7 +24,8 @@ namespace BancoSimple2T1
 
         private void CargarTransferencias()
         {
-            dgvTransferencias.DataSource = con.Transacciones.ToList();
+            //así que lo cambiamos a una con la que ya estamos realcionado
+            dgvTransferencias.DataSource = _dbcontext.Transacciones.ToList();
         }
     }
 }

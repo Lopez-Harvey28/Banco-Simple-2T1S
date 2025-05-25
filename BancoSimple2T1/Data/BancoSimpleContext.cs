@@ -10,14 +10,13 @@ namespace BancoSimple2T1.Data
 {
     public class BancoSimpleContext : DbContext
     {
-        public DbSet   <Cliente> Cliente { get; set; }
-        public DbSet <Cuenta> Cuenta { get; set;}
+        public DbSet   <Cliente> Clientes { get; set; }
+        public DbSet <Cuenta> Cuentas { get; set;}
         public DbSet <Transaccion> Transacciones { get; set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server = DESKTOP-B1JNRCE\SQLSERVER2019; database =BancoSimple2T1; trusted_Connection = true; trustservercertificate = true;") ;
-
+            optionsBuilder.UseSqlServer(@"Server = (localdb)\CarlosR; database = BancoSimple2M5; trusted_Connection = true; trustservercertificate = true;");
         }
         //Definicion de filtro global
         protected override void OnModelCreating(ModelBuilder modelBuilder)

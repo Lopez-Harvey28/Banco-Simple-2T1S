@@ -23,11 +23,14 @@ namespace BancoSimple2T1
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtNumeroCuenta.Text))
+            //Y aqui tambien se utilizo para evitar la duplicacion de codigo
+            if (!AccionesRepetidas.ValidarCampos(txtNumeroCuenta))
             {
-                MessageBox.Show("El numero de cuenta es requerido");
+                Mensajes.MostrarAdvertencia("El número de cuenta es obligatorio.");
                 return;
             }
+
+            Mensajes.MostrarExito("Cuenta creada con éxito.");
 
             NuevaCuenta = new Cuenta
             {

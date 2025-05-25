@@ -21,11 +21,13 @@ namespace BancoSimple2T1
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtNombre.Text) || string.IsNullOrWhiteSpace(txtIdentificacion.Text))
+            if (!AccionesRepetidas.ValidarCampos(txtNombre, txtIdentificacion))
             {
-                MessageBox.Show("Todos los campos son necesarios");
+                //aqui se utilizo el metodo de la clase AccionesRepetidas para evitar la duplicacion de codigo
+                Mensajes.MostrarError("Por favor, complete todos los campos.");
                 return;
             }
+            Mensajes.MostrarExito("Cliente agregado con éxito.");
             NuevoCliente = new Cliente
             {
                 Nombre = txtNombre.Text,
